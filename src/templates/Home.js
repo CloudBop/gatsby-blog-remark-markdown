@@ -5,8 +5,9 @@ import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import Hero from 'components/Hero';
 import BlogPostCard from 'components/BlogPostCard';
+import PageNavigation from 'components/PageNavigation';
 
-const IndexPage = ({ data }) => {
+const IndexPage = ({ data, pageContext }) => {
   const posts = data.allMarkdownRemark.edges;
 
   return (
@@ -15,15 +16,15 @@ const IndexPage = ({ data }) => {
       <Hero />
       {/** wrap all posts here */}
       <main>
+        <PageNavigation currentPage={pageContext.currentPage} numPages={pageContext.numPages} />
         {posts.map(({ node }, idx) => {
           //
-          // const title = node.frontmatter.title;
-          //
+          const title = node.frontmatter.title || node.fields.slug || 'no title';
           return (
             <BlogPostCard
-              key={idx}
-              slug="/"
-              title={node.frontmatter.title}
+              key={node.fields.slug}
+              slug={node.fields.slug}
+              title={title}
               date={node.frontmatter.date}
               readingTime={node.fields.readingTime.text}
               excerpt={node.excerpt}
@@ -39,14 +40,17 @@ const IndexPage = ({ data }) => {
 export default IndexPage;
 
 export const indexQuery = graphql`
-  query GetPosts {
+  query GetBlogPosts($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
-      filter: { frontmatter: { type: { eq: "post" } } }
+      limit: $limit
+      skip: $skip
+      filter: { frontmatter: { type: { eq: "post" }, published: { eq: true } } }
       sort: { fields: frontmatter___date, order: DESC }
     ) {
       edges {
         node {
           fields {
+            slug
             readingTime {
               text
             }
