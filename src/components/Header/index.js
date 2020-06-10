@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import Menu from 'components/Menu';
 // Hooks
 import { useSiteConfigQuery } from 'hooks/useSiteConfigQuery';
 // Context
@@ -11,9 +12,11 @@ const Header = ({ siteTitle = `` }) => {
 
   return (
     <Wrapper>
+      <Menu items={siteConfig.menu} />
       <Link to="/">
         <Logo src={siteConfig.logo.publicURL} alt={siteTitle} />
       </Link>
+      <div>mode</div>
     </Wrapper>
   );
 };
