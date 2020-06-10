@@ -1,13 +1,10 @@
 import React from 'react';
+import { graphql } from 'gatsby';
 // import { Link } from 'gatsby';
-
 import Layout from 'components/Layout';
-// import Image from 'components/image';
 import SEO from 'components/SEO';
 import Hero from 'components/Hero';
 import BlogPostCard from 'components/BlogPostCard';
-
-import { graphql } from 'gatsby';
 
 const IndexPage = ({ data }) => {
   const posts = data.allMarkdownRemark.edges;
