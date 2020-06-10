@@ -1,5 +1,5 @@
-import { useStaticQuery, graphql } from "gatsby"
-
+import { useStaticQuery, graphql } from 'gatsby';
+// setup navigation
 export const useSiteConfigQuery = () => {
   const data = useStaticQuery(graphql`
     query ConfigQuery {
@@ -16,6 +16,6 @@ export const useSiteConfigQuery = () => {
         }
       }
     }
-  `)
-  return data.markdownRemark.frontmatter
-}
+  `);
+  return data.markdownRemark.frontmatter;
+};
