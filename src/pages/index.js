@@ -5,19 +5,39 @@ import Layout from 'components/Layout';
 // import Image from 'components/image';
 import SEO from 'components/SEO';
 import Hero from 'components/Hero';
+import BlogPostCard from 'components/BlogPostCard';
+
 import { graphql } from 'gatsby';
 
-const IndexPage = ({ data }) => (
-  <Layout>
-    {console.log('data', data)}
-    <SEO title="home" />
-    <Hero />
-    {/** wrap all posts here */}
-    <main>
-      <div className="blogpostcard">blog post paginate goes here</div>
-    </main>
-  </Layout>
-);
+const IndexPage = ({ data }) => {
+  const posts = data.allMarkdownRemark.edges;
+
+  return (
+    <Layout>
+      <SEO title="home" />
+      <Hero />
+      {/** wrap all posts here */}
+      <main>
+        {posts.map(({ node }, idx) => {
+          //
+          // const title = node.frontmatter.title;
+          //
+          return (
+            <BlogPostCard
+              key={idx}
+              slug="/"
+              title={node.frontmatter.title}
+              date={node.frontmatter.date}
+              readingTime={node.fields.readingTime.text}
+              excerpt={node.excerpt}
+              image={node.frontmatter.image.childImageSharp.fluid}
+            />
+          );
+        })}
+      </main>
+    </Layout>
+  );
+};
 
 export default IndexPage;
 
