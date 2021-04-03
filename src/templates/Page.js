@@ -4,9 +4,10 @@ import { graphql } from "gatsby"
 import Layout from "components/Layout"
 import Image from "components/Image"
 import SEO from "components/SEO"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 const Page = ({ data }) => {
-  const page = data.markdownRemark
+  const page = data.mdx
 
   return (
     <Layout>
@@ -14,7 +15,8 @@ const Page = ({ data }) => {
       <Image fluid={page.frontmatter.image.childImageSharp.fluid} />
       <main>
         <h2>{page.frontmatter.title}</h2>
-        <div dangerouslySetInnerHTML={{ __html: page.html }} />
+        {/* <div dangerouslySetInnerHTML={{ __html: page.html }} /> */}
+        <MDXRenderer>{page.body}</MDXRenderer>
       </main>
     </Layout>
   )
@@ -24,8 +26,8 @@ export default Page
 
 export const query = graphql`
   query($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+    mdx(fields: { slug: { eq: $slug } }) {
+      body
       frontmatter {
         title
         date

@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 export const useHeroQuery = () => {
   const data = useStaticQuery(graphql`
     query HeroQuery {
-      markdownRemark(frontmatter: { type: { eq: "hero" } }) {
+      mdx(frontmatter: { type: { eq: "hero" } }) {
         frontmatter {
           heroImage {
             childImageSharp {
@@ -20,5 +20,5 @@ export const useHeroQuery = () => {
     }
   `)
 
-  return data.markdownRemark.frontmatter
+  return data.mdx.frontmatter
 }

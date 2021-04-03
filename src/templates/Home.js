@@ -1,14 +1,14 @@
-import React from 'react';
-import { graphql } from 'gatsby';
+import React from "react"
+import { graphql } from "gatsby"
 // import { Link } from 'gatsby';
-import Layout from 'components/Layout';
-import SEO from 'components/SEO';
-import Hero from 'components/Hero';
-import BlogPostCard from 'components/BlogPostCard';
-import PageNavigation from 'components/PageNavigation';
+import Layout from "components/Layout"
+import SEO from "components/SEO"
+import Hero from "components/Hero"
+import BlogPostCard from "components/BlogPostCard"
+import PageNavigation from "components/PageNavigation"
 
 const IndexPage = ({ data, pageContext }) => {
-  const posts = data.allMarkdownRemark.edges;
+  const posts = data.allMdx.edges
 
   return (
     <Layout>
@@ -16,10 +16,13 @@ const IndexPage = ({ data, pageContext }) => {
       <Hero />
       {/** wrap all posts here */}
       <main>
-        <PageNavigation currentPage={pageContext.currentPage} numPages={pageContext.numPages} />
+        <PageNavigation
+          currentPage={pageContext.currentPage}
+          numPages={pageContext.numPages}
+        />
         {posts.map(({ node }, idx) => {
           //
-          const title = node.frontmatter.title || node.fields.slug || 'no title';
+          const title = node.frontmatter.title || node.fields.slug || "no title"
           return (
             <BlogPostCard
               key={node.fields.slug}
@@ -30,18 +33,18 @@ const IndexPage = ({ data, pageContext }) => {
               excerpt={node.excerpt}
               image={node.frontmatter.image.childImageSharp.fluid}
             />
-          );
+          )
         })}
       </main>
     </Layout>
-  );
-};
+  )
+}
 
-export default IndexPage;
+export default IndexPage
 
 export const indexQuery = graphql`
   query GetBlogPosts($skip: Int!, $limit: Int!) {
-    allMarkdownRemark(
+    allMdx(
       limit: $limit
       skip: $skip
       filter: { frontmatter: { type: { eq: "post" }, published: { eq: true } } }
@@ -71,4 +74,4 @@ export const indexQuery = graphql`
       }
     }
   }
-`;
+`
