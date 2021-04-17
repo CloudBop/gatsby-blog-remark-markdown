@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 // Components
 import Layout from "components/Layout"
 import Image from "components/Image"
-import SEO from "components/SEO"
+import Seo from "components/SEO"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 const Page = ({ data }) => {
@@ -11,7 +11,7 @@ const Page = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title={page.frontmatter.title} />
+      <Seo title={page.frontmatter.title} />
       <Image fluid={page.frontmatter.image.childImageSharp.fluid} />
       <main>
         <h2>{page.frontmatter.title}</h2>
